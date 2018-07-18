@@ -1,44 +1,59 @@
-let restaurants,
-  neighborhoods,
-  cuisines;
-var newMap;
-var markers = [];
+const neighborhoodsModel = {
+  init() {
+    // Get data from the DB
+    return new Promise((resolve, reject) => {
+      DBHelper.fetchNeighborhoods((error, neighborhoods) => {
+        if (error) { // Got an error
+          console.error(error);
+          reject();
+        } else {
+          neighborhoodsModel.neighborhoods = neighborhoods;
+          resolve();
+        }
+      });
+    });
+  }
+};
+
+const neighborhoodsView = {
+  el: document.getElementById('neighborhoods-select'),
+
+  init() {
+    // Render with the data from the controller
+    this.render(controller.getNeighborhoods());
+  },
+
+  render(neighborhoods) {
+    neighborhoods.forEach(neighborhood => {
+      const option = document.createElement('option');
+      option.innerHTML = neighborhood;
+      option.value = neighborhood;
+      this.el.append(option);
+    });
+  }
+};
+
+const controller = {
+  init() {
+    document.addEventListener('DOMContentLoaded', () => {
+      neighborhoodsModel.init().then(() => {neighborhoodsView.init();});
+    });
+  },
+
+  getNeighborhoods() {
+    return neighborhoodsModel.neighborhoods;
+  }
+};
+
+controller.init();
 
 /**
  * Fetch neighborhoods and cuisines as soon as the page is loaded.
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
-  fetchNeighborhoods();
   fetchCuisines();
 });
-
-/**
- * Fetch all neighborhoods and set their HTML.
- */
-const fetchNeighborhoods = () => {
-  DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-    if (error) { // Got an error
-      console.error(error);
-    } else {
-      self.neighborhoods = neighborhoods;
-      fillNeighborhoodsHTML();
-    }
-  });
-};
-
-/**
- * Set neighborhoods HTML.
- */
-const fillNeighborhoodsHTML = (neighborhoods = self.neighborhoods) => {
-  const select = document.getElementById('neighborhoods-select');
-  neighborhoods.forEach(neighborhood => {
-    const option = document.createElement('option');
-    option.innerHTML = neighborhood;
-    option.value = neighborhood;
-    select.append(option);
-  });
-};
 
 /**
  * Fetch all cuisines and set their HTML.
