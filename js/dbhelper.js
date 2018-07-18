@@ -163,7 +163,7 @@ class DBHelper {
       alt: restaurant.name,
       url: DBHelper.urlForRestaurant(restaurant)
       })
-      marker.addTo(newMap);
+      marker.addTo(mapModel.newMap);
     return marker;
   } 
   /* static mapMarkerForRestaurant(restaurant, map) {
