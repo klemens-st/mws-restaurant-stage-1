@@ -143,10 +143,11 @@ nav h1 a {
   background-color: #fff;
   border: 2px solid #ccc;
   font-family: Arial,sans-serif;
-  padding: 25px 30px;
+  padding: 25px 30px 81px;
   text-align: left;
   width: 100%;
   box-sizing: border-box;
+  position: relative;
 }
 #restaurants-list .restaurant-img {
   background-color: #ccc;
@@ -174,11 +175,13 @@ nav h1 a {
   color: #fff;
   display: inline-block;
   font-size: 10pt;
-  margin: 15px 0 0;
+  margin: 0;
   padding: 8px 30px 10px;
   text-align: center;
   text-decoration: none;
   text-transform: uppercase;
+  position: absolute;
+  bottom: 25px;
 }
 
 @media screen and (min-width: 450px) {
