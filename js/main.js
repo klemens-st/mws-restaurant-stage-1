@@ -1,5 +1,12 @@
-const neighborhoodsModel = {
+const filterModel = {
   init() {
+    return Promise.all([
+      this.fetchNeighborhoods(),
+      this.fetchCuisines()
+    ]);
+  },
+
+  fetchNeighborhoods() {
     // Get data from the DB
     return new Promise((resolve, reject) => {
       DBHelper.fetchNeighborhoods((error, neighborhoods) => {
@@ -7,28 +14,59 @@ const neighborhoodsModel = {
           console.error(error);
           reject();
         } else {
-          neighborhoodsModel.neighborhoods = neighborhoods;
+          this.neighborhoods = neighborhoods;
           resolve();
         }
       });
     });
+  },
+
+  fetchCuisines() {
+    return new Promise((resolve, reject) => {
+      DBHelper.fetchCuisines((error, cuisines) => {
+        if (error) { // Got an error!
+          console.error(error);
+          reject();
+        } else {
+          this.cuisines = cuisines;
+          resolve();
+        }
+      });
+    });
+  },
+
+  getData() {
+    return {
+      neighborhoods: this.neighborhoods,
+      cuisines: this.cuisines
+    };
   }
 };
 
-const neighborhoodsView = {
-  el: document.getElementById('neighborhoods-select'),
+const filterView = {
+  neighborhoodsEl: document.getElementById('neighborhoods-select'),
+  cuisinesEl: document.getElementById('cuisines-select'),
 
   init() {
     // Render with the data from the controller
-    this.render(controller.getNeighborhoods());
+    this.render(controller.getFilterData());
   },
 
-  render(neighborhoods) {
-    neighborhoods.forEach(neighborhood => {
+  render(data) {
+    // Render neighborhoods
+    data.neighborhoods.forEach(neighborhood => {
       const option = document.createElement('option');
       option.innerHTML = neighborhood;
       option.value = neighborhood;
-      this.el.append(option);
+      this.neighborhoodsEl.append(option);
+
+      // Render cuisines
+      data.cuisines.forEach(cuisine => {
+        const option = document.createElement('option');
+        option.innerHTML = cuisine;
+        option.value = cuisine;
+        this.cuisinesEl.append(option);
+      });
     });
   }
 };
@@ -36,14 +74,16 @@ const neighborhoodsView = {
 const controller = {
   init() {
     document.addEventListener('DOMContentLoaded', () => {
-      neighborhoodsModel.init().then(() => {neighborhoodsView.init();});
+      filterModel.init().then(() => {filterView.init();});
     });
   },
 
-  getNeighborhoods() {
-    return neighborhoodsModel.neighborhoods;
+  getFilterData() {
+    return filterModel.getData();
   }
 };
+
+
 
 controller.init();
 
@@ -52,36 +92,7 @@ controller.init();
  */
 document.addEventListener('DOMContentLoaded', (event) => {
   initMap(); // added
-  fetchCuisines();
 });
-
-/**
- * Fetch all cuisines and set their HTML.
- */
-const fetchCuisines = () => {
-  DBHelper.fetchCuisines((error, cuisines) => {
-    if (error) { // Got an error!
-      console.error(error);
-    } else {
-      self.cuisines = cuisines;
-      fillCuisinesHTML();
-    }
-  });
-};
-
-/**
- * Set cuisines HTML.
- */
-const fillCuisinesHTML = (cuisines = self.cuisines) => {
-  const select = document.getElementById('cuisines-select');
-
-  cuisines.forEach(cuisine => {
-    const option = document.createElement('option');
-    option.innerHTML = cuisine;
-    option.value = cuisine;
-    select.append(option);
-  });
-};
 
 /**
  * Initialize leaflet map, called from HTML.
