@@ -4,6 +4,7 @@
 
 const filterModel = {
   init() {
+    // Return a promise when all data is fetched sucessfully
     return Promise.all([
       this.fetchNeighborhoods(),
       this.fetchCuisines()
@@ -26,6 +27,7 @@ const filterModel = {
   },
 
   fetchCuisines() {
+    // Get data from the DB
     return new Promise((resolve, reject) => {
       DBHelper.fetchCuisines((error, cuisines) => {
         if (error) { // Got an error!
@@ -39,6 +41,7 @@ const filterModel = {
     });
   },
 
+  // Getter method fetched data.
   getData() {
     return {
       neighborhoods: this.neighborhoods,
@@ -55,6 +58,7 @@ const filterView = {
     // Render with the data from the controller
     this.render(controller.getFilterData());
 
+    // Listen for changes in filter selection
     [this.neighborhoodsEl, this.cuisinesEl].forEach((el) => {
       el.addEventListener('change', controller.resetRestaurants);
     });
@@ -78,6 +82,7 @@ const filterView = {
     });
   },
 
+  // Retrieve and return user selection
   getSelection() {
     const cIndex = this.cuisinesEl.selectedIndex;
     const nIndex = this.neighborhoodsEl.selectedIndex;
@@ -99,6 +104,7 @@ const restaurantsModel = {
     return this.fetchRestaurants(sel.cuisine, sel.neighborhood);
   },
 
+  // Get data from the DB
   fetchRestaurants(cuisine, neighborhood) {
     return new Promise((resolve, reject) => {
       DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
@@ -114,6 +120,7 @@ const restaurantsModel = {
     });
   },
 
+  // Getter method form this.restaurants
   getRestaurants() {
     return this.restaurants;
   }
@@ -174,6 +181,7 @@ const restaurantsView = {
 const mapModel = {
   markers: [],
 
+  // Mapbox init
   init() {
     this.newMap = L.map('map', {
       center: [40.722216, -73.987501],
@@ -190,6 +198,7 @@ const mapModel = {
     }).addTo(this.newMap);
   },
 
+  // Resets map markers
   addMarkers(restaurants) {
     this.resetMarkers();
 
@@ -217,6 +226,7 @@ const mapModel = {
  */
 
 const controller = {
+  // Set everything up and render.
   init() {
     document.addEventListener('DOMContentLoaded', () => {
       filterModel.init().then(() => filterView.init());
@@ -225,6 +235,7 @@ const controller = {
     });
   },
 
+  // Getter methods
   getFilterData() {
     return filterModel.getData();
   },
@@ -237,12 +248,14 @@ const controller = {
     return restaurantsModel.getRestaurants();
   },
 
+  // This is called on user selection change
   resetRestaurants() {
     restaurantsModel.init().then(() => restaurantsView.render(
       controller.getRestaurants())
     );
   },
 
+  // Triggers map resets.
   setMarkers(restaurants) {
     mapModel.addMarkers(restaurants);
   }
