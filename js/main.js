@@ -3,6 +3,12 @@
  */
 
 const filterModel = {
+  // Stores user selection. Initializes with default data.
+  selection: {
+    cuisine: 'all',
+    neighborhood: 'all'
+  },
+
   init() {
     // Return a promise when all data is fetched sucessfully
     return Promise.all([
@@ -31,20 +37,28 @@ const filterModel = {
       neighborhoods: this.neighborhoods,
       cuisines: this.cuisines
     };
+  },
+
+  updateSelection(selection) {
+    this.selection = selection;
+  },
+
+  getSelection() {
+    return this.selection;
   }
 };
 
 const filterView = {
-  neighborhoodsEl: document.getElementById('neighborhoods-select'),
-  cuisinesEl: document.getElementById('cuisines-select'),
-
   init() {
+    // Bind elements
+    this.neighborhoodsEl =document.getElementById('neighborhoods-select');
+    this.cuisinesEl = document.getElementById('cuisines-select');
     // Render with the data from the controller
     this.render(controller.getFilterData());
 
     // Listen for changes in filter selection
     [this.neighborhoodsEl, this.cuisinesEl].forEach((el) => {
-      el.addEventListener('change', controller.resetRestaurants);
+      el.addEventListener('change', controller.updateRestaurants);
     });
   },
 
@@ -102,9 +116,10 @@ const restaurantsModel = {
 };
 
 const restaurantsView = {
-  el: document.getElementById('restaurants-list'),
-
   init() {
+    // Bind element
+    this.el = document.getElementById('restaurants-list');
+
     this.render(controller.getRestaurants());
   },
 
@@ -203,11 +218,9 @@ const mapModel = {
 const controller = {
   // Set everything up and render.
   init() {
-    document.addEventListener('DOMContentLoaded', () => {
-      filterModel.init().then(() => filterView.init());
-      restaurantsModel.init().then(() => restaurantsView.init());
-      mapModel.init();
-    });
+    filterModel.init().then(() => filterView.init());
+    restaurantsModel.init().then(() => restaurantsView.init());
+    mapModel.init();
   },
 
   // Getter methods
@@ -216,7 +229,7 @@ const controller = {
   },
 
   getFilterSelection() {
-    return filterView.getSelection();
+    return filterModel.getSelection();
   },
 
   getRestaurants() {
@@ -224,6 +237,11 @@ const controller = {
   },
 
   // This is called on user selection change
+  updateRestaurants() {
+    filterModel.updateSelection(filterView.getSelection());
+    controller.resetRestaurants();
+  },
+
   resetRestaurants() {
     restaurantsModel.init().then(() => restaurantsView.render(
       controller.getRestaurants())
@@ -236,4 +254,49 @@ const controller = {
   }
 };
 
-controller.init();
+/*
+ * <main> controller
+ */
+
+const mainController = {
+  setState(state) {
+    this.state = state;
+    mainView.render(state);
+  },
+
+  getState() {
+    return this.state;
+  }
+};
+
+const mainView = {
+  // <main> element to hook into
+  el: document.querySelector('main'),
+  // All templates
+  templates: document.querySelectorAll('.template'),
+
+  // Maps states to templates
+  // Returns a text/template element
+  getTemplate(state) {
+    let template;
+    this.templates.forEach(n => {
+      if (n.id === state) template = n;
+    });
+    return template;
+  },
+
+  render(state) {
+    // Add 'inside' class to body if we are on details page
+    if ('details' === state) {
+      document.body.classList.add('inside');
+    } else {
+      document.body.classList.remove('inside');
+    }
+
+    // Insert template into page
+    this.el.innerHTML = this.getTemplate(state).innerHTML;
+
+    // Proceed with subviews
+    controller.init();
+  }
+};

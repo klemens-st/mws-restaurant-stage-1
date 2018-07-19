@@ -276,6 +276,11 @@ nav h1 a {
   color: #666;
 }
 
+/* Templates */
+.template {
+  display: none;
+}
+
 /* ====================== Reponsive styles ====================== */
 
 @media screen and (min-width: 450px) {
