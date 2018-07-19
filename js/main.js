@@ -13,31 +13,15 @@ const filterModel = {
 
   fetchNeighborhoods() {
     // Get data from the DB
-    return new Promise((resolve, reject) => {
-      DBHelper.fetchNeighborhoods((error, neighborhoods) => {
-        if (error) { // Got an error
-          console.error(error);
-          reject();
-        } else {
-          this.neighborhoods = neighborhoods;
-          resolve();
-        }
-      });
+    return DBHelper.fetchNeighborhoods().then(neighborhoods => {
+      this.neighborhoods = neighborhoods;
     });
   },
 
   fetchCuisines() {
     // Get data from the DB
-    return new Promise((resolve, reject) => {
-      DBHelper.fetchCuisines((error, cuisines) => {
-        if (error) { // Got an error!
-          console.error(error);
-          reject();
-        } else {
-          this.cuisines = cuisines;
-          resolve();
-        }
-      });
+    return DBHelper.fetchCuisines().then(cuisines => {
+      this.cuisines = cuisines;
     });
   },
 
@@ -106,17 +90,8 @@ const restaurantsModel = {
 
   // Get data from the DB
   fetchRestaurants(cuisine, neighborhood) {
-    return new Promise((resolve, reject) => {
-      DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood, (error, restaurants) => {
-        if (error) { // Got an error!
-          console.error(error);
-          reject();
-        } else {
-          this.restaurants = restaurants;
-          resolve();
-          // need to reset markers in the view
-        }
-      });
+    return DBHelper.fetchRestaurantByCuisineAndNeighborhood(cuisine, neighborhood).then(restaurants => {
+      this.restaurants = restaurants;
     });
   },
 
