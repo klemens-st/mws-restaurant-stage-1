@@ -1,0 +1,14 @@
+{
+  "name": "mws-restaurant-stage-1",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "test": ""
+  },
+  "author": "Klemens Starybrat",
+  "license": "None",
+  "devDependencies": {
+    "local-web-server": "^2.5.6"
+  }
+}
