@@ -8,7 +8,5 @@
   },
   "author": "Klemens Starybrat",
   "license": "None",
-  "devDependencies": {
-    "local-web-server": "^2.5.6"
   }
 }
