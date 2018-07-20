@@ -143,8 +143,14 @@ const restaurantsView = {
     image.alt = restaurant.name;
     li.append(image);
 
+    // Title is a link to details page
+    // Removed 'View details' for accessibility reasons
+    const more = document.createElement('a');
+    more.href = DBHelper.urlForRestaurant(restaurant);
+    more.innerHTML = restaurant.name;
+
     const name = document.createElement('h3');
-    name.innerHTML = restaurant.name;
+    name.append(more);
     li.append(name);
 
     const neighborhood = document.createElement('p');
@@ -154,11 +160,6 @@ const restaurantsView = {
     const address = document.createElement('p');
     address.innerHTML = restaurant.address;
     li.append(address);
-
-    const more = document.createElement('a');
-    more.innerHTML = 'View Details';
-    more.href = DBHelper.urlForRestaurant(restaurant);
-    li.append(more);
 
     return li;
   },
