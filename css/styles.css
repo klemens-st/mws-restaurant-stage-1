@@ -2,38 +2,38 @@
 /* CSS Document */
 
 body,td,th,p{
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333;
-	line-height: 1.5;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  color: #333;
+  line-height: 1.5;
 }
 body {
-	background-color: #fdfdfd;
-	margin: 0;
-	position:relative;
+  background-color: #fdfdfd;
+  margin: 0;
+  position:relative;
 }
 ul, li {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 10pt;
-	color: #333;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  color: #333;
 }
 a {
-	color: orange;
-	text-decoration: none;
+  color: orange;
+  text-decoration: none;
 }
 a:hover, a:focus {
-	color: #3397db;
-	text-decoration: none;
+  color: #3397db;
+  text-decoration: none;
 }
 a img{
-	border: none 0px #fff;
+  border: none 0px #fff;
 }
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   margin: 0 0 20px;
 }
 article, aside, canvas, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
-	display: block;
+  display: block;
 }
 #maincontent {
   background-color: #f3f3f3;
@@ -65,12 +65,14 @@ nav h1 a {
   text-transform: uppercase;
 }
 #breadcrumb {
-    padding: 10px 40px 16px;
+    padding: 10px 10px 16px;
     list-style: none;
     background-color: #eee;
     font-size: 17px;
     margin: 0;
-    width: calc(50% - 80px);
+    width: 100%;
+    position: relative;
+    height: 100%;
 }
 
 /* Display list items side by side */
@@ -101,6 +103,7 @@ nav h1 a {
   height: 250px;
   width: 100%;
   background-color: #ccc;
+  z-index: 1;
 }
 /* ====================== Restaurant Filtering ====================== */
 .filter-options {
@@ -185,30 +188,32 @@ nav h1 a {
 }
 
 /* ====================== Restaurant Details ====================== */
+
 .inside header {
   position: fixed;
   top: 0;
-  width: 100%;
-  z-index: 1000;
-}
-.inside #map-container {
-  background: blue none repeat scroll 0 0;
-  height: 87%;
-  position: fixed;
   right: 0;
-  top: 80px;
-  width: 50%;
+  left: 0;
+  box-sizing: border-box;
+  z-index: 2;
+  overflow: hidden;
+  height: 132px;
 }
+
+.inside main {
+  margin-top: 131px;
+  display: grid;
+  grid: "map" 250px "restaurant" auto "reviews" auto / 1fr;
+}
+
+.inside #map-container {
+  grid-area: map;
+}
+
 .inside #map {
-  background-color: #ccc;
   height: 100%;
-  width: 100%;
 }
-.inside #footer {
-  bottom: 0;
-  position: absolute;
-  width: 50%;
-}
+
 #restaurant-name {
   color: #f18200;
   font-family: Arial,sans-serif;
@@ -220,7 +225,7 @@ nav h1 a {
   line-height: 1.1;
 }
 #restaurant-img {
-	width: 90%;
+  width: 100%;
 }
 #restaurant-address {
   font-size: 12pt;
@@ -236,16 +241,18 @@ nav h1 a {
   padding: 2px 0;
   text-align: center;
   text-transform: uppercase;
-	width: 90%;
 }
 #restaurant-container, #reviews-container {
   border-bottom: 1px solid #d9d9d9;
-  border-top: 1px solid #fff;
-  padding: 140px 40px 30px;
-  width: 50%;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+}
+#restaurant-container {
+  grid-area: restaurant;
 }
 #reviews-container {
-  padding: 30px 40px 80px;
+  grid-area: reviews;
 }
 #reviews-container h2 {
   color: #f58500;
@@ -257,17 +264,17 @@ nav h1 a {
 #reviews-list {
   margin: 0;
   padding: 0;
+  display: grid;
+  grid: auto-flow / 1fr;
+  grid-gap: 15px;
 }
 #reviews-list li {
   background-color: #fff;
-    border: 2px solid #f3f3f3;
+  border: 2px solid #f3f3f3;
   display: block;
   list-style-type: none;
-  margin: 0 0 30px;
   overflow: hidden;
-  padding: 0 20px 20px;
-  position: relative;
-  width: 85%;
+  padding: 20px;
 }
 #reviews-list li p {
   margin: 0 0 10px;
@@ -298,4 +305,32 @@ nav h1 a {
   #restaurants-list {grid: auto-flow / repeat(4, 1fr);}
   #map {height: 400px;}
   h1 {font-size: 3em;}
+}
+
+/* Details styles */
+@media screen and (min-width: 413px) {
+  .inside header {height: 102px;}
+  .inside main {margin-top: 102px}
+}
+
+@media screen and (min-width: 580px) {
+  #reviews-list {grid: auto-flow / repeat(2, 1fr)}
+  .inside main {
+    grid: "restaurant map" 2fr "restaurant ." 1fr "reviews reviews" auto / 3fr 2fr;
+  }
+}
+
+@media screen and (min-width: 769px) {
+  .inside main {
+    grid: "restaurant map" auto "reviews map" auto / 1fr 1fr;
+  }
+  #reviews-list {grid: auto-flow / 1fr}
+  .inside header {height: 111px;}
+  .inside main {margin-top: 111px}
+}
+
+@media screen and (min-width: 1025px) {
+  #reviews-list {grid: auto-flow / repeat(2, 1fr)}
+  .inside header {height: 132px}
+  .inside main {margin-top: 132px}
 }
