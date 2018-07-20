@@ -21,5 +21,21 @@ module.exports = {
             "error",
             "always"
         ]
+    },
+    "globals": {
+        "filterView": false,
+        "filterModel": false,
+        "DBHelper": false,
+        "controller": false,
+        "detailsController": false,
+        "mainController": false,
+        "breadcrumbView": false,
+        "mapModel": false,
+        "L": false,
+        "restaurantModel": false,
+        "restaurantView": false,
+        "restaurantsModel": false,
+        "restaurantsView": false,
+
     }
 };
