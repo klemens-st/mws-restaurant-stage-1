@@ -20,6 +20,10 @@ const router = {
         this.navigate(e.target.href);
       }
     });
+    // Manage back and forward buttons
+    window.onpopstate = (e) => {
+      this.navigate(location.href);
+    }
   },
 
 
@@ -27,7 +31,9 @@ const router = {
   // @param url string
   navigate(url) {
     if (new URL(url).origin === location.origin) {
-      history.pushState(null, null, url);
+      if (url !== location.href) {
+        history.pushState(null, null, url);
+      }
       this.changeState(url);
     }
   },

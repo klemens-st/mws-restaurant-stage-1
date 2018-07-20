@@ -7,6 +7,10 @@
     "test": ""
   },
   "author": "Klemens Starybrat",
-  "license": "None",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sourcemaps": "^2.6.4"
   }
 }
