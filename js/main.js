@@ -224,8 +224,9 @@ const controller = {
   init() {
     filterModel.init().then(() => filterView.init());
     restaurantsModel.init().then(() => restaurantsView.init());
-    mapModel.init([40.722216, -73.987501], 12);
+    mapModel.init([40.722216, -73.987501], 11);
     breadcrumbView.reset();
+    window.scrollTo(0, 0);
   },
 
   // Getter methods
@@ -429,6 +430,7 @@ const detailsController = {
       restaurantView.render(restaurant);
       mapModel.init([restaurant.latlng.lat, restaurant.latlng.lng], 16);
       mapModel.addMarker(restaurant);
+      window.scrollTo(0, 0);
     });
   }
 };
