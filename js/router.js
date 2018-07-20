@@ -12,9 +12,10 @@ const router = {
     // Load the page
     this.navigate(location.href);
 
-    // Listen for clicks on links
+    // Listen for clicks on links. Exclude bookmark links
     document.body.addEventListener('click', (e) => {
-      if (e.target.nodeName === 'A') {
+      if (e.target.nodeName === 'A' &&
+          e.target.getAttribute('href').charAt(0) !== '#') {
         e.preventDefault();
         this.navigate(e.target.href);
       }

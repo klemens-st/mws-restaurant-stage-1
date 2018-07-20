@@ -75,6 +75,20 @@ nav h1 a {
     height: 100%;
 }
 
+/* Skip link */
+.skip-link {
+  top: -40px;
+  position: absolute;
+  left: 0;
+  background: #bf1722;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+}
+.skip-link:focus {
+  top: 0;
+}
+
 /* Display list items side by side */
 #breadcrumb li {
     display: inline;
