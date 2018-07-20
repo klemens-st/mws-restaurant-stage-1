@@ -21,9 +21,12 @@ const router = {
       }
     });
     // Manage back and forward buttons
-    window.onpopstate = (e) => {
+    window.onpopstate = () => {
       this.navigate(location.href);
-    }
+    };
+    // Register Service Worker
+    if (!navigator.serviceWorker) return;
+    navigator.serviceWorker.register('/sw.js');
   },
 
 
