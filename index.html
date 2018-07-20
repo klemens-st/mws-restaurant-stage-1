@@ -39,12 +39,18 @@
     <section>
       <div class="filter-options">
         <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods">
-          <option value="all">All Neighborhoods</option>
-        </select>
-        <select id="cuisines-select" name="cuisines">
-          <option value="all">All Cuisines</option>
-        </select>
+        <div class="filter-group">
+          <label for="neighborhoods-select">Choose neighborhood:</label>
+          <select id="neighborhoods-select" name="neighborhoods">
+            <option value="all">All Neighborhoods</option>
+          </select>
+        </div>
+        <div class="filter-group">
+          <label for="cuisines-select">Choose cuisine:</label>
+          <select id="cuisines-select" name="cuisines">
+            <option value="all">All Cuisines</option>
+          </select>
+        </div>
       </div>
       <ul id="restaurants-list"></ul>
     </section>
