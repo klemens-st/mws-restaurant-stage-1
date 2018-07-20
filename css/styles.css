@@ -180,7 +180,7 @@ nav h1 a {
   margin: 0;
   width: 100%;
 }
-#restaurants-list li h1 {
+#restaurants-list li h3 {
   color: #f18200;
   font-family: Arial,sans-serif;
   font-size: 14pt;
@@ -305,9 +305,13 @@ nav h1 a {
   color: #666;
 }
 
-/* Templates */
+/* Utility classes */
 .template {
   display: none;
+}
+.off-screen {
+  position: absolute;
+  top: 9999px;
 }
 
 /* ====================== Reponsive styles ====================== */
