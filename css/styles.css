@@ -300,7 +300,7 @@ nav h1 a {
 }
 .off-screen {
   position: absolute;
-  top: 9999px;
+  top: -9999px;
 }
 
 /* ====================== Reponsive styles ====================== */
