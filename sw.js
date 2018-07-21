@@ -7,6 +7,7 @@ self.addEventListener('install', e => {
         '/css/styles.css',
         '/dist/js/app.js',
         '/data/restaurants.json',
+        '/restaurant/?id=1',
         '/img/1.jpg',
         '/img/2.jpg',
         '/img/3.jpg',
@@ -22,11 +23,16 @@ self.addEventListener('install', e => {
   );
 });
 
+// Inspired by https://developers.google.com/web/fundamentals/instant-and-offline/offline-cookbook/
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(response => {
-      if (response) return response;
-      return fetch(e.request);
+    caches.open('restaurant-reviews').then((cache) => {
+      return cache.match(e.request, {ignoreSearch: true}).then((response) => {
+        return response || fetch(e.request).then((response) => {
+          cache.put(e.request, response.clone());
+          return response;
+        });
+      });
     })
   );
 });
