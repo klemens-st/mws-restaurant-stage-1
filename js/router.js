@@ -26,7 +26,9 @@ const router = {
     };
     // Register Service Worker
     if (!navigator.serviceWorker) return;
-    navigator.serviceWorker.register('/sw.js');
+    navigator.serviceWorker.register('/sw.js', {
+      scope: '/'
+    });
   },
 
 
