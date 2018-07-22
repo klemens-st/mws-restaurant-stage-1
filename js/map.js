@@ -10,7 +10,8 @@ const mapModel = {
     this.newMap = L.map('map', {
       center: center,
       zoom: zoom,
-      scrollWheelZoom: false
+      scrollWheelZoom: false,
+      keyboard: false
     });
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.jpg70?access_token={mapboxToken}', {
       mapboxToken: 'pk.eyJ1IjoienltZXRoIiwiYSI6ImNqanB1czAyNzJrYnUzcW0waTN5aWFka2oifQ.nQ7qOoLJpnAvXnmRI70_dQ',
