@@ -54,6 +54,7 @@ const restaurantsView = {
     const more = document.createElement('a');
     more.href = DBHelper.urlForRestaurant(restaurant);
     more.innerHTML = restaurant.name;
+    more.tabIndex = 0;
 
     const name = document.createElement('h3');
     name.append(more);

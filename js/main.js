@@ -67,7 +67,7 @@ const breadcrumbView = {
   },
 
   reset() {
-    this.el.innerHTML = '<li><a href="/">Home</a></li>';
+    this.el.innerHTML = '<li><a href="/" tabindex="0">Home</a></li>';
   }
 };
 
