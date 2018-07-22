@@ -46,7 +46,7 @@ const restaurantsView = {
     const image = document.createElement('img');
     image.className = 'restaurant-img';
     image.src = DBHelper.imageUrlForRestaurant(restaurant);
-    image.alt = restaurant.name;
+    image.alt = `An image of ${restaurant.name}`;
     li.append(image);
 
     // Title is a link to details page
